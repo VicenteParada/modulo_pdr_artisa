@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Reinstrucciones</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <!-- Add your logo here -->
+        </div>
+        <ul class="menu">
+            <li><i class="fas fa-home"></i></li>
+            <li><i class="fas fa-sign-out-alt"></i></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="breadcrumbs">
+                <span>Modulo Prevencion de Riesgos</span>
+            </div>
+            <div class="user-info">
+                <span>Franco Roa</span>
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar conductor...">
+            <div class="filter-group">
+                <select>
+                    <option value="all">Filtro</option>
+                    <option value="all">Realizado</option>
+                    <option value="all">Pendiente</option>
+                    <option value="all">Fuera de Turno</option>
+                </select>
+                <button class="filter-btn">Buscar</button>
+            </div>
+        </div>        
+
+
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document List with Popup</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                .document-list {
+                    width: 100%;
+                    margin: 20px auto;
+                    border-collapse: collapse;
+                }
+                .document-list table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .document-list th, .document-list td {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    text-align: left;
+                }
+
+                .btn.icon-btn {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                }
+                /* Popup container */
+                .popup {
+                    display: none;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid #ddd;
+                    background-color: white;
+                    padding: 20px;
+                    z-index: 1000;
+                    width: 300px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                }
+                /* Popup close button */
+                .popup .close-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    cursor: pointer;
+                }
+                /* Overlay */
+                .overlay {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 999;
+                }
+                /* Popup table */
+                .popup table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .popup th, .popup td {
+                    padding: 5px;
+                    border-bottom: 1px solid #ddd;
+                    text-align: left;
+                }
+            </style>
+        </head>
+        <body>
+        
+        <div class="document-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conductor (Instructor / Reincidencia)</th>
+                        <th>Estado</th>
+                        <th>Ver Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jaime Lique Tinte - (Leopoldo Nuñez Cerna / Tipo 1)</td>
+                        <td><span class="status red">Pendiente</span></td>
+                        <td>
+                            <button class="btn icon-btn" onclick="openPopup('popup1')"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Oscar Barrios Ramirez - (Luis Trujillo Ceron / Tipo 1)</td>
+                        <td><span class="status green">Realizado</span></td>
+                        <td>
+                            <button class="btn icon-btn" onclick="openPopup('popup2')"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Juan Saez Paredes - (Luis Trujillo Ceron / Tipo 1)</td>
+                        <td><span class="status yellow">Fuera de Turno</span></td>
+                        <td>
+                            <button class="btn icon-btn" onclick="openPopup('popup3')"><i class="fas fa-eye"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Overlay -->
+        <div id="overlay" class="overlay" onclick="closePopup()"></div>
+        
+        <!-- Popup for the first row -->
+        <div id="popup1" class="popup">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h3>Detalles</h3>
+            <table>
+                <tr><th>Nombre:</th><td>Jaime Lique Tinte</td></tr>
+                <tr><th>RUT:</th><td>12.345.678-9</td></tr>
+                <tr><th>Turno:</th><td>Mañana</td></tr>
+                <tr><th>Total de Excesos:</th><td>5</td></tr>
+                <tr><th>Fecha:</th><td>20/08/2024</td></tr>
+                <tr><th>Ruta:</th><td>Ruta 5</td></tr>
+                <tr><th>Velocidad:</th><td>80 km/h</td></tr>
+                <tr><th>Cantidad:</th><td>3</td></tr>
+                <tr><th>Responsable:</th><td>Leopoldo Nuñez Cerna</td></tr>
+                <tr><th>Realizada:</th><td>No</td></tr>
+            </table>
+        </div>
+        
+        <!-- Popup for the second row -->
+        <div id="popup2" class="popup">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h3>Detalles</h3>
+            <table>
+                <tr><th>Nombre:</th><td>Oscar Barrios Ramirez</td></tr>
+                <tr><th>RUT:</th><td>12.345.678-9</td></tr>
+                <tr><th>Turno:</th><td>Tarde</td></tr>
+                <tr><th>Total de Excesos:</th><td>2</td></tr>
+                <tr><th>Fecha:</th><td>19/08/2024</td></tr>
+                <tr><th>Ruta:</th><td>Ruta 7</td></tr>
+                <tr><th>Velocidad:</th><td>85 km/h</td></tr>
+                <tr><th>Cantidad:</th><td>1</td></tr>
+                <tr><th>Responsable:</th><td>Luis Trujillo Ceron</td></tr>
+                <tr><th>Realizada:</th><td>Sí</td></tr>
+            </table>
+        </div>
+        
+        <!-- Popup for the third row -->
+        <div id="popup3" class="popup">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h3>Detalles</h3>
+            <table>
+                <tr><th>Nombre:</th><td>Juan Saez Paredes</td></tr>
+                <tr><th>RUT:</th><td>12.345.678-9</td></tr>
+                <tr><th>Turno:</th><td>Noche</td></tr>
+                <tr><th>Total de Excesos:</th><td>3</td></tr>
+                <tr><th>Fecha:</th><td>18/08/2024</td></tr>
+                <tr><th>Ruta:</th><td>Ruta 3</td></tr>
+                <tr><th>Velocidad:</th><td>75 km/h</td></tr>
+                <tr><th>Cantidad:</th><td>2</td></tr>
+                <tr><th>Responsable:</th><td>Luis Trujillo Ceron</td></tr>
+                <tr><th>Realizada:</th><td>No</td></tr>
+            </table>
+        </div>
+        
+        <script>
+            function openPopup(popupId) {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById(popupId).style.display = 'block';
+            }
+        
+            function closePopup() {
+                document.getElementById('overlay').style.display = 'none';
+                var popups = document.getElementsByClassName('popup');
+                for (var i = 0; i < popups.length; i++) {
+                    popups[i].style.display = 'none';
+                }
+            }
+        </script>
+        
+        </body>
+        </html>
+        
+        </div>
+    </div>
+</body>
+
+</html>
