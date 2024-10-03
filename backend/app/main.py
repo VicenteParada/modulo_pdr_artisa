@@ -1,26 +1,9 @@
-#####################################################################################################
-###########################           BIBLIOT DEL SISTEMA           #################################
-#####################################################################################################
-
-
-
 from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import pyodbc
 
-
-
-
-
-#####################################################################################################
-###########################           CLASES DEL SISTEMA           #################################
-#####################################################################################################
-
-
-
-
+# CLASES DEL SISTEMA
 
 # CONDUCTOR
 class Conductor:
@@ -39,59 +22,37 @@ class Reinstructor:
 
 # REINSTRUCCION
 class Reinstruccion:
-    def __init__(self, id_reinstruccion, reinstructor, conductor, fecha_asignacion, realizado_bool=False):
+    def __init__(self, id_reinstruccion, reinstructor, conductor, fecha_asignacion=None, realizado_bool=False):
         self.id_reinstruccion = id_reinstruccion
         self.reinstructor = reinstructor
         self.conductor = conductor
-        self.fecha_asignacion = datetime.now().strftime("%d/%m/%Y")  # Mantener la fecha con "/"
+        self.fecha_asignacion = fecha_asignacion or datetime.now().strftime("%d/%m/%Y")
         self.realizado_bool = realizado_bool
-    
-    # Método para generar el nombre basado en el formato especificado, eliminando las "/"
+
     def generar_nombre(self):
-        # Reemplazar las barras "/" en la fecha para el nombre del archivo
         fecha_sin_barras = self.fecha_asignacion.replace("/", "")
         return f"{self.conductor.nombre_conductor}_{fecha_sin_barras}_{self.reinstructor.nombre_reinstructor}"
-    
-    # Método para verificar si el archivo existe (en esta versión siempre devuelve False)
+
     def verificar_realizado(self):
-        # Aquí ya no se hace ninguna validación, siempre será False
-        self.realizado_bool = False
+        self.realizado_bool = False  # Simulación para este ejemplo
 
-    # Método para imprimir la reinstrucción
     def imprimir(self):
-        print(f"conductor: {self.conductor.nombre_conductor}")
-        print(f"cant excesos: {self.conductor.cantidad_excesos}")
-        print(f"fecha: {self.fecha_asignacion}")  # Aquí mantendremos la fecha con "/"
-        print(f"a cargo de: {self.reinstructor.nombre_reinstructor}")
-        print(f"estado: {'Realizado' if self.realizado_bool else 'No realizado'}")
-        print(f"correo_reinstructor: {self.correo_reinstructor}")
-
-
-#####################################################################################################
-###########################           FUNCIONES DE CORREO           #################################
-#####################################################################################################
-
-
-
-
+        print(f"Conductor: {self.conductor.nombre_conductor}")
+        print(f"Cantidad de excesos: {self.conductor.cantidad_excesos}")
+        print(f"Fecha: {self.fecha_asignacion}")
+        print(f"A cargo de: {self.reinstructor.nombre_reinstructor}")
+        print(f"Estado: {'Realizado' if self.realizado_bool else 'No realizado'}")
 
     def enviar_correo(self, smtp_server, smtp_port, remitente, password):
         asunto = "Reinstrucción Automática"
         cuerpo = f"""
         Estimado {self.reinstructor.nombre_reinstructor},
 
-        Esperando que se encuentre bien. Se le escribe para informar que hemos detectado un total de 
-        {self.conductor.cantidad_excesos} excesos del conductor {self.conductor.nombre_conductor}
-        asignado el dia {self.fecha_asignacion}.
-
-
-        Agradecemos tu comprensión y tu compromiso con la mejora continua.
+        Se ha detectado un total de {self.conductor.cantidad_excesos} excesos del conductor {self.conductor.nombre_conductor}
+        asignado el día {self.fecha_asignacion}.
 
         Saludos cordiales,
-        Departamento de Prevencion de Riesgos ARTISA
-
-        Correo Automatizado NO RESPONDER
-
+        Departamento de Prevención de Riesgos
         """
 
         # Crear el mensaje
@@ -100,19 +61,37 @@ class Reinstruccion:
         msg['To'] = self.reinstructor.correo_reinstructor
         msg['Subject'] = asunto
 
-        # Agregar el cuerpo del correo
         msg.attach(MIMEText(cuerpo, 'plain'))
 
         try:
-            # Conectar al servidor SMTP
             with smtplib.SMTP(smtp_server, smtp_port) as server:
-                server.starttls()  # Iniciar conexión segura
-                server.login(remitente, password)  # Iniciar sesión
-                server.send_message(msg)  # Enviar el mensaje
-
+                server.starttls()
+                server.login(remitente, password)
+                server.send_message(msg)
             print("Correo enviado con éxito.")
         except Exception as e:
             print(f"Error al enviar el correo: {e}")
 
+# PRUEBAS UNITARIAS
 
+import unittest
 
+class TestReinstruccion(unittest.TestCase):
+    def setUp(self):
+        self.conductor = Conductor(1, "Jaime Lique Tinte", 5)
+        self.reinstructor = Reinstructor(1, "Luis Trujillo", "Tipo 1", "luis.trujillo@example.com")
+        self.reinstruccion = Reinstruccion(1, self.reinstructor, self.conductor)
+
+    def test_generar_nombre(self):
+        nombre = self.reinstruccion.generar_nombre()
+        self.assertEqual(nombre, "Jaime Lique Tinte_26092024_Luis Trujillo")  # Cambia la fecha según sea necesario
+
+    def test_verificar_realizado(self):
+        self.reinstruccion.verificar_realizado()
+        self.assertFalse(self.reinstruccion.realizado_bool)
+
+    def test_imprimir(self):
+        self.reinstruccion.imprimir()  # Verifica manualmente la salida en consola
+
+if __name__ == "__main__":
+    unittest.main()
