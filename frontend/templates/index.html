@@ -1,30 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Reinstrucciones</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background: #333;
+            color: #fff;
+            padding: 20px;
+        }
+        .sidebar .logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .document-list {
+            margin-top: 20px;
+        }
+        .document-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .document-list th, .document-list td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #ddd;
+            background-color: white;
+            padding: 20px;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
 </head>
-
 
 <body>
     <div class="sidebar">
         <div class="logo">
-            <!-- Add your logo here -->
+            Logo
         </div>
         <ul class="menu">
-            <li><i class="fas fa-home"></i></li>
-            <li><i class="fas fa-sign-out-alt"></i></li>
+            <li><i class="fas fa-home"></i> Inicio</li>
+            <li><i class="fas fa-sign-out-alt"></i> Salir</li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="header">
             <div class="breadcrumbs">
-                <span>Modulo Prevencion de Riesgos</span>
+                <span>Módulo Prevención de Riesgos</span>
             </div>
             <div class="user-info">
                 <span>Franco Roa</span>
@@ -42,6 +103,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- 
+                    Este bucle 'for' itera sobre la lista de reinstrucciones 
+                    y genera una fila de tabla y un popup para cada reinstrucción.
+                    -->
                     {% for reinstruccion in reinstrucciones %}
                     <tr>
                         <td>{{ reinstruccion.conductor.nombre_conductor }} - ({{ reinstruccion.reinstructor.nombre_reinstructor }} / Tipo {{ reinstruccion.reinstructor.nivel_reinstructor }})</td>
@@ -58,7 +123,10 @@
         <!-- Overlay -->
         <div id="overlay" class="overlay" onclick="closePopup()"></div>
 
-        <!-- Popups para cada reinstrucción -->
+        <!-- 
+        Popups para cada reinstrucción. 
+        Cada popup se identifica de forma única usando 'reinstruccion.id_reinstruccion'.
+        -->
         {% for reinstruccion in reinstrucciones %}
         <div id="popup{{ reinstruccion.id_reinstruccion }}" class="popup">
             <span class="close-btn" onclick="closePopup()">&times;</span>
@@ -67,9 +135,13 @@
                 <tr><th>Conductor:</th><td>{{ reinstruccion.conductor.nombre_conductor }}</td></tr>
                 <tr><th>Reinstructor:</th><td>{{ reinstruccion.reinstructor.nombre_reinstructor }}</td></tr>
                 <tr><th>Nivel Reinstructor:</th><td>{{ reinstruccion.reinstructor.nivel_reinstructor }}</td></tr>
-                <tr><th>RUT:</th><td>{{ id_conductor.id_conductor.id_conductor }}</td></tr> <!-- Agrega aquí el RUT correspondiente -->
+                <tr><th>RUT:</th><td>12.345.678-9</td></tr>
+                <tr><th>Turno:</th><td>Mañana</td></tr>
                 <tr><th>Total de Excesos:</th><td>{{ reinstruccion.conductor.cantidad_excesos }}</td></tr>
                 <tr><th>Fecha:</th><td>{{ reinstruccion.fecha_asignacion }}</td></tr>
+                <tr><th>Ruta:</th><td>Ruta 5</td></tr>
+                <tr><th>Velocidad:</th><td>80 km/h</td></tr>
+                <tr><th>Cantidad:</th><td>3</td></tr>
                 <tr><th>Responsable:</th><td>{{ reinstruccion.reinstructor.nombre_reinstructor }}</td></tr>
                 <tr><th>Realizada:</th><td>{{ 'Sí' if reinstruccion.realizado_bool else 'No' }}</td></tr>
             </table>
@@ -92,5 +164,8 @@
         </script>
         
     </div>
+</body>
+</html>
+
 </body>
 </html>
