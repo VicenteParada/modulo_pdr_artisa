@@ -10,8 +10,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-if __name__ == "__main__":
-    app.run()
 # CLASES DEL SISTEMA
 
 # CONDUCTOR
@@ -102,5 +100,6 @@ class TestReinstruccion(unittest.TestCase):
     def test_imprimir(self):
         self.reinstruccion.imprimir()  # Verifica manualmente la salida en consola
 
+# Ejecutar las pruebas al correr el archivo
 if __name__ == "__main__":
     unittest.main()
